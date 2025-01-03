@@ -7,18 +7,40 @@ class StringCalculator {
         if (!str) {
             return 0;
         }
-        //replace '\n' with ',' in the strin
-        str = str.replace(/\n/g, ',');
-        //creating an array from the string
-        const str_numbers = str.split(',');
-        //converting string to a number
-        const numbers = str_numbers.map(n => Number(n));
+        //separating str and delimeters from input
+        let { actual_str, delimeters } = this.#getDelimeters(str);
+        //creating an array of numbers from the string
+        const numbers = this.#convertStringToNumbers(actual_str, delimeters);
         //calculating the sum
         let sum = 0;
         for (const number of numbers) {
             sum += number;
         }
         return sum;
+    }
+
+    #getDelimeters(str) {
+        //if str starts with '//' it means str has specific delimeter
+        if (str.startsWith('//')) {
+            const [delimeter_str, actual_str] = str.split('\n');
+            return { delimeters: delimeter_str[2], actual_str: actual_str };
+        } else {
+            // ',', '\n' will be default delimeters
+            return { delimeters: [',', '\n'], actual_str: str };
+        }
+    }
+
+    #convertStringToNumbers(str, delimeters) {
+        const numbers = [];
+        for (const s of str) {
+            //if s is a delimeter then skip it
+            if (delimeters.includes(s)) {
+                continue;
+            } else {
+                numbers.push(Number(s));
+            }
+        }
+        return numbers;
     }
 }
 
@@ -27,3 +49,5 @@ console.log(new StringCalculator().add(""));
 console.log(new StringCalculator().add("1"));
 console.log(new StringCalculator().add("1,5"));
 console.log(new StringCalculator().add("1\n2,3"));
+console.log(new StringCalculator().add("//;\n1;2"));
+console.log(new StringCalculator().add("//@\n1@2@4"));
