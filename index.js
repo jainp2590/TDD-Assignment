@@ -24,6 +24,7 @@ class StringCalculator {
         if (str.startsWith('//')) {
             const [delimeter_str, actual_str] = str.split('\n');
             // remove first two characters ie: '//' and rest will be delimeter_str
+            //this delimeter_str will work in multiple delimeter case as well
             return { delimeters: delimeter_str.substring(2), actual_str: actual_str };
         } else {
             // ',', '\n' will be default delimeters
@@ -77,4 +78,6 @@ console.log(new StringCalculator().add("//;\n1;21"));
 console.log(new StringCalculator().add("//@\n1@2@4"));
 console.log(new StringCalculator().add("//@\n1005@2"));
 console.log(new StringCalculator().add("//@@@\n1@@@2@@@4"));
+console.log(new StringCalculator().add("//[*][@]\n5@2*8"));
+console.log(new StringCalculator().add("//[*@][@*]\n6@*7*@1"));
 console.log(new StringCalculator().add("//@\n-1@2@4"));
