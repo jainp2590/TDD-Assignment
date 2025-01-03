@@ -56,7 +56,7 @@ class StringCalculator {
         const number = Number(num_str);
         if (number < 0) {
             negative_numbers.push(number)
-        } else {
+        } else if (number <= 1000) {
             numbers.push(number);
         }
     }
@@ -74,4 +74,5 @@ console.log(new StringCalculator().add("1\n2,3"));
 console.log(new StringCalculator().add("//;\n1;2"));
 console.log(new StringCalculator().add("//;\n1;21"));
 console.log(new StringCalculator().add("//@\n1@2@4"));
+console.log(new StringCalculator().add("//@\n1005@2"));
 console.log(new StringCalculator().add("//@\n-1@2@4"));
