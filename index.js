@@ -7,6 +7,8 @@ class StringCalculator {
         if (!str) {
             return 0;
         }
+        //replace '\n' with ',' in the strin
+        str = str.replace(/\n/g, ',');
         //creating an array from the string
         const str_numbers = str.split(',');
         //converting string to a number
@@ -24,3 +26,4 @@ console.log(new StringCalculator().add());
 console.log(new StringCalculator().add(""));
 console.log(new StringCalculator().add("1"));
 console.log(new StringCalculator().add("1,5"));
+console.log(new StringCalculator().add("1\n2,3"));
