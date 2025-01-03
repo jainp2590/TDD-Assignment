@@ -32,15 +32,37 @@ class StringCalculator {
 
     #convertStringToNumbers(str, delimeters) {
         const numbers = [];
+        const negative_numbers = [];
+        let num_str = '';
         for (const s of str) {
-            //if s is a delimeter then skip it
+            //if we encounter any delimeter, it means we have got our number
             if (delimeters.includes(s)) {
-                continue;
+                this.#checkForNumber(num_str, numbers);
+                num_str = '';
             } else {
-                numbers.push(Number(s));
+                num_str += s;
             }
         }
+        //checking for remaining num str
+        this.#checkForNumber(num_str, numbers);
+        //if any negative numbers are found then throw an error
+        if (negative_numbers.length > 0) {
+            return this.#throwError(negative_numbers);
+        }
         return numbers;
+    }
+
+    #checkForNumber(num_str, numbers) {
+        const number = Number(num_str);
+        if (number < 0) {
+            negative_numbers.push(number)
+        } else {
+            numbers.push(number);
+        }
+    }
+
+    #throwError(negative_numbers) {
+        throw `negatives not allowed: ${negative_numbers.join(' ')}`;
     }
 }
 
@@ -50,4 +72,6 @@ console.log(new StringCalculator().add("1"));
 console.log(new StringCalculator().add("1,5"));
 console.log(new StringCalculator().add("1\n2,3"));
 console.log(new StringCalculator().add("//;\n1;2"));
+console.log(new StringCalculator().add("//;\n1;21"));
 console.log(new StringCalculator().add("//@\n1@2@4"));
+console.log(new StringCalculator().add("//@\n-1@2@4"));
