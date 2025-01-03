@@ -23,7 +23,8 @@ class StringCalculator {
         //if str starts with '//' it means str has specific delimeter
         if (str.startsWith('//')) {
             const [delimeter_str, actual_str] = str.split('\n');
-            return { delimeters: delimeter_str[2], actual_str: actual_str };
+            // remove first two characters ie: '//' and rest will be delimeter_str
+            return { delimeters: delimeter_str.substring(2), actual_str: actual_str };
         } else {
             // ',', '\n' will be default delimeters
             return { delimeters: [',', '\n'], actual_str: str };
@@ -75,4 +76,5 @@ console.log(new StringCalculator().add("//;\n1;2"));
 console.log(new StringCalculator().add("//;\n1;21"));
 console.log(new StringCalculator().add("//@\n1@2@4"));
 console.log(new StringCalculator().add("//@\n1005@2"));
+console.log(new StringCalculator().add("//@@@\n1@@@2@@@4"));
 console.log(new StringCalculator().add("//@\n-1@2@4"));
